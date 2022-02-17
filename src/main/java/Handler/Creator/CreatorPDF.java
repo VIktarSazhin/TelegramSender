@@ -20,6 +20,7 @@ public class CreatorPDF {
     public static File createPDF() {
         File file = new File("newPDF.pdf");
         try {
+            List<User> users = JSConverter.parse();
             PdfWriter pdfWriter = new PdfWriter("newPDF.pdf");
             float[] columnWidth = {200F, 100F, 200F};
             PdfDocument pdfDocument = new PdfDocument(pdfWriter);
@@ -35,7 +36,7 @@ public class CreatorPDF {
             table.addCell(new Cell().add("User name"));
             table.addCell(new Cell().add("Spend time"));
             table.addCell(new Cell().add("Activities"));
-            List<User> users = JSConverter.parse();
+
             for (User el : users
             ) {
                 table.addCell(new Cell().add(el.getUser_name()))
@@ -44,13 +45,13 @@ public class CreatorPDF {
             }
             document.add(table);
             document.close();
-            return file;
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return file;
 
     }
 }

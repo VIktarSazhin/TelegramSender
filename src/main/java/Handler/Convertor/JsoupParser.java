@@ -6,7 +6,7 @@ import org.jsoup.nodes.Document;
 import java.io.IOException;
 
 public class JsoupParser {
-    public static void parsURL(){
+    public static String parsURL(){
 
         Document doc = null;
         try {
@@ -16,6 +16,6 @@ public class JsoupParser {
             e.printStackTrace();
         }
         String title = String.valueOf(doc.body());
-        System.out.println(title);
+        return title;
     }
 }

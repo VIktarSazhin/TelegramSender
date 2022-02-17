@@ -17,7 +17,7 @@ public class Bot extends TelegramLongPollingBot {
     private static String RED_TEAM_ID="-610071476";
     private static String SERGEY_PERETYAGIN_ID="1399019417";
 //    private static String YURII_ID="";
-    private static String [] redTeam = {SAZHIN_VIKTOR_ID, ALEX_FROST_ID, RED_TEAM_ID, SERGEY_PERETYAGIN_ID};
+    private static String [] redTeam = {SERGEY_PERETYAGIN_ID};
 
 
     public Bot(DefaultBotOptions defaultBotOptions) {
@@ -36,10 +36,11 @@ public class Bot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
     }
 
-    public static void main(String[] args) throws TelegramApiException {
+//    public static void main(String[] args) throws TelegramApiException {
+    public static void start() throws TelegramApiException {
         Bot bot = new Bot(new DefaultBotOptions());
-        TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
-        telegramBotsApi.registerBot(bot);
+//        TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
+//        telegramBotsApi.registerBot(bot);
         File file = CreatorPDF.createPDF();
         InputFile inputFile = new InputFile(file);
         for (String str:
