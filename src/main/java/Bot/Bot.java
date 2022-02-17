@@ -17,7 +17,7 @@ public class Bot extends TelegramLongPollingBot {
     private static String RED_TEAM_ID="-610071476";
     private static String SERGEY_PERETYAGIN_ID="1399019417";
 //    private static String YURII_ID="";
-    private static String [] redTeam = {SERGEY_PERETYAGIN_ID};
+    private static String [] redTeam = {SAZHIN_VIKTOR_ID, SERGEY_PERETYAGIN_ID};
 
 
     public Bot(DefaultBotOptions defaultBotOptions) {
