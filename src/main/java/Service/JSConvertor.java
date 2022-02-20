@@ -13,17 +13,17 @@ import java.util.Collections;
 import java.util.List;
 
 public class JSConvertor {
-    private static String PATH_JSON = "/opt/tomcat/webapps/newtelega/source/output.json";
+//    private static String PATH_JSON = "/opt/tomcat/webapps/newtelega/source/output.json";
 
     public List<User> parse() throws IOException {
         List<User> listUser = new ArrayList<>();
         JSONParser jsonParser = new JSONParser();
-        File file = new File(PATH_JSON);
+//        File file = new File(PATH_JSON);
 //        File file = new File("output.json");
-        try (FileReader fileReader = new FileReader(file)) {
+//        try (FileReader fileReader = new FileReader(file)) {
             try {
-                JSONObject object = (JSONObject) jsonParser.parse(fileReader);
-//            JSONObject object = (JSONObject) jsonParser.parse(JsoupParser.parsURL());
+//                JSONObject object = (JSONObject) jsonParser.parse(fileReader);
+            JSONObject object = (JSONObject) jsonParser.parse(JsoupParser.parsURL());
                 JSONArray jsonArray = (JSONArray) object.get("Players_data");
                 for (Object o :
                         jsonArray) {
@@ -36,11 +36,11 @@ public class JSConvertor {
                     System.out.println(listUser);
                 }
                 Collections.sort(listUser);
-                PDFConvertor.groupUsers(listUser);
+//                PDFConvertor.groupUsers(listUser);
             } catch (Exception e) {
                 e.printStackTrace();
             }
             return listUser;
         }
-    }
+//    }
 }

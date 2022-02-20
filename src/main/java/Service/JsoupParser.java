@@ -15,7 +15,7 @@ public class JsoupParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String title = String.valueOf(doc.body());
+        String title = String.valueOf(doc.text());
         return title;
     }
 }

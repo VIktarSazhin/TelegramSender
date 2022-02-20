@@ -98,7 +98,7 @@ public class Bot extends TelegramLongPollingBot {
 //            InputFile inputFile = new InputFile(file);
 //            execute(SendDocument.builder().chatId(chatId).document(inputFile).build());
             if (file.isFile())
-                sendFile(file);
+                getFile(file, chatId);
         }
         if (callbackQuery.getData().equals("No")) {
             execute(SendMessage.builder().chatId(chatId).text("Правильно, лучше пусть само придет").build());
@@ -117,11 +117,17 @@ public class Bot extends TelegramLongPollingBot {
         chatIdList.add(message.getChatId().toString());
     }
 
+    public void getFile(File file, String chatId) throws TelegramApiException {
+        InputFile inputFile = new InputFile(file);
+        execute(SendDocument.builder().chatId(chatId).document(inputFile).build());
+    }
+
+
     public void sendFile(File file) throws TelegramApiException {
         InputFile inputFile = new InputFile(file);
-        for (String str:
+        for (String chatId:
                 chatIdList) {
-            execute(SendDocument.builder().chatId(str).document(inputFile).build());
+            execute(SendDocument.builder().chatId(chatId).document(inputFile).build());
         }
 
     }

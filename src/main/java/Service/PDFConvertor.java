@@ -21,16 +21,17 @@ import java.util.Map;
 
 public class PDFConvertor {
 
-    static Map<String, List<String>> usersMap=new HashMap<>();
+//    static Map<String, List<String>> usersMap=new HashMap<>();
     private static String PATH_FILE = "/opt/tomcat/webapps/newtelega/source/newPDF.pdf";
-    static List<User> users = new ArrayList<>();
+//    static List<User> users = new ArrayList<>();
 
     public File createPDF() {
         File file = new File(PATH_FILE);
 //        File file = new File("newPDF.pdf");
         try {
+            Map<String, List<String>> usersMap=new HashMap<>();
             JSConvertor jsConvertor = new JSConvertor();
-            users = jsConvertor.parse();
+            List<User> users = jsConvertor.parse();
             PdfWriter pdfWriter = new PdfWriter(PATH_FILE);
             float[] columnWidth = {200F, 100F, 200F};
             PdfDocument pdfDocument = new PdfDocument(pdfWriter);
@@ -46,7 +47,10 @@ public class PDFConvertor {
             table.addCell(new Cell().add("User name"));
             table.addCell(new Cell().add("Spend time"));
             table.addCell(new Cell().add("Activities"));
-
+            for (User el:
+                    users) {
+                usersMap.computeIfAbsent(el.getUser_name(),k->new ArrayList<String>()).add(el.getSpend_time()+"&%@"+el.getActivities());
+            }
             for (Map.Entry<String,List<String>> el : usersMap.entrySet()
             ) {
                 table.addCell(new Cell(el.getValue().size(),1).add(el.getKey()));
@@ -56,6 +60,7 @@ public class PDFConvertor {
                     table.addCell(new Cell().add(action.split("&%@")[1]));
                 }
             }
+
             document.add(table);
             document.close();
 
@@ -67,10 +72,10 @@ public class PDFConvertor {
         return file;
     }
 
-    public static void groupUsers(List<User> users){
-        for (User el:
-                users) {
-            usersMap.computeIfAbsent(el.getUser_name(),k->new ArrayList<String>()).add(el.getSpend_time()+"&%@"+el.getActivities());
-        }
-    }
+//    public static void groupUsers(List<User> users){
+//        for (User el:
+//                users) {
+//            usersMap.computeIfAbsent(el.getUser_name(),k->new ArrayList<String>()).add(el.getSpend_time()+"&%@"+el.getActivities());
+//        }
+//    }
 }
