@@ -22,18 +22,18 @@ import java.util.Map;
 public class PDFConvertor {
 
 //    static Map<String, List<String>> usersMap=new HashMap<>();
-    private static String PATH_FILE = "/opt/tomcat/webapps/newtelega/source/newPDF.pdf";
+//    private static String PATH_FILE = "/opt/tomcat/webapps/newtelega/source/newPDF.pdf";
 //    static List<User> users = new ArrayList<>();
 
     public File createPDF() {
 //        File file = new File(PATH_FILE);
-        File file = new File(PATH_FILE);
+        File file = new File("newPDF.pdf");
         try {
             Map<String, List<String>> usersMap=new HashMap<>();
             JSConvertor jsConvertor = new JSConvertor();
             List<User> users = jsConvertor.parse();
 //            PdfWriter pdfWriter = new PdfWriter(PATH_FILE);
-            PdfWriter pdfWriter = new PdfWriter(PATH_FILE);
+            PdfWriter pdfWriter = new PdfWriter("newPDF.pdf");
             float[] columnWidth = {200F, 100F, 200F};
             PdfDocument pdfDocument = new PdfDocument(pdfWriter);
             pdfDocument.addNewPage();
