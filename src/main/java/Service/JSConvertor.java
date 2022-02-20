@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class JSConvertor {
-    private static String PATH_JSON = "/opt/tomcat/webapps/telega/source/output.json";
+    private static String PATH_JSON = "/opt/tomcat/webapps/newtelega/source/output.json";
 
     public List<User> parse() throws IOException {
         List<User> listUser = new ArrayList<>();
