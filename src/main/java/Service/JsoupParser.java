@@ -15,7 +15,9 @@ public class JsoupParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String title = String.valueOf(doc.text());
+//        String title = String.valueOf(doc.text());
+        String title = String.valueOf(doc.body()).replace("<body>","").replace("</body>","").replace("<p>","")
+                .replace("</p>","");
         return title;
     }
 }
