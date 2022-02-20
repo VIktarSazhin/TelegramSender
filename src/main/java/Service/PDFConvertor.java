@@ -22,7 +22,7 @@ import java.util.Map;
 public class PDFConvertor {
 
     static Map<String, List<String>> usersMap=new HashMap<>();
-    private static String PATH_FILE = "/opt/tomcat/apache-tomcat-9.0.58/webapps/newbot/source/newPDF.pdf";
+    private static String PATH_FILE = "/opt/tomcat/webapps/telega/source/newPDF.pdf";
     static List<User> users = new ArrayList<>();
 
     public File createPDF() {
