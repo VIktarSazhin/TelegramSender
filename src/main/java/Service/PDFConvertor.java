@@ -1,6 +1,5 @@
-package Handler.Creator;
+package Service;
 
-import Handler.Convertor.JSConverter;
 import com.itextpdf.kernel.color.Color;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -8,24 +7,35 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
-import model.User;
+import entity.User;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class CreatorPDF {
-    public static File createPDF() {
-        File file = new File("newPDF.pdf");
+public class PDFConvertor {
+
+    static Map<String, List<String>> usersMap=new HashMap<>();
+    private static String PATH_FILE = "/opt/tomcat/webapps/telega/source/newPDF.pdf";
+    static List<User> users = new ArrayList<>();
+
+    public File createPDF() {
+        File file = new File(PATH_FILE);
+//        File file = new File("newPDF.pdf");
         try {
-            List<User> users = JSConverter.parse();
-            PdfWriter pdfWriter = new PdfWriter("newPDF.pdf");
+            JSConvertor jsConvertor = new JSConvertor();
+            users = jsConvertor.parse();
+            PdfWriter pdfWriter = new PdfWriter(PATH_FILE);
             float[] columnWidth = {200F, 100F, 200F};
             PdfDocument pdfDocument = new PdfDocument(pdfWriter);
             pdfDocument.addNewPage();
-            SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
             Document document = new Document(pdfDocument);
             Paragraph paragraph = new Paragraph("RED TEAM").setFontSize(50F)
                     .setFontColor(Color.RED);
@@ -37,11 +47,14 @@ public class CreatorPDF {
             table.addCell(new Cell().add("Spend time"));
             table.addCell(new Cell().add("Activities"));
 
-            for (User el : users
+            for (Map.Entry<String,List<String>> el : usersMap.entrySet()
             ) {
-                table.addCell(new Cell().add(el.getUser_name()))
-                        .addCell(new Cell().add(el.getSpend_time()))
-                        .addCell(new Cell().add(el.getActivities()));
+                table.addCell(new Cell(el.getValue().size(),1).add(el.getKey()));
+                for (String action:el.getValue()
+                ) {
+                    table.addCell(new Cell().add(action.split("&%@")[0]));
+                    table.addCell(new Cell().add(action.split("&%@")[1]));
+                }
             }
             document.add(table);
             document.close();
@@ -52,6 +65,12 @@ public class CreatorPDF {
             e.printStackTrace();
         }
         return file;
+    }
 
+    public static void groupUsers(List<User> users){
+        for (User el:
+                users) {
+            usersMap.computeIfAbsent(el.getUser_name(),k->new ArrayList<String>()).add(el.getSpend_time()+"&%@"+el.getActivities());
+        }
     }
 }
