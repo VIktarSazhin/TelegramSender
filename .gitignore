@@ -1,0 +1,15 @@
+.mj.tmp/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+*.iml
+.idea/
+.idea_modules/
+*.iml
+*.ipr
+*.iws
+log/
+target/
+out/
